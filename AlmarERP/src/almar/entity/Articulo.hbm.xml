@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 28-ene-2015 14:00:52 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="almar.entity.Articulo" table="articulo" catalog="datos" optimistic-lock="version">
+        <id name="idArticulo" type="java.lang.Byte">
+            <column name="id_articulo" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="categoria" class="almar.entity.Categoria" fetch="select">
+            <column name="id_categoria" not-null="true" />
+        </many-to-one>
+        <many-to-one name="proveedor" class="almar.entity.Proveedor" fetch="select">
+            <column name="id_proveedor" not-null="true" />
+        </many-to-one>
+        <property name="codFabricante" type="string">
+            <column name="cod_fabricante" length="20" />
+        </property>
+        <property name="stock" type="byte">
+            <column name="stock" not-null="true" />
+        </property>
+        <property name="nombre" type="string">
+            <column name="nombre" length="30" not-null="true" />
+        </property>
+        <property name="precio" type="int">
+            <column name="precio" not-null="true" />
+        </property>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="300" />
+        </property>
+        <set name="lineasPedidos" table="lineas_pedido" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="id_articulo" not-null="true" />
+            </key>
+            <one-to-many class="almar.entity.LineasPedido" />
+        </set>
+    </class>
+</hibernate-mapping>
