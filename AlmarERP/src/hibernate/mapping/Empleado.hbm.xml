@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-feb-2015 23:52:33 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="datos" name="almar.entidades.Empleado" optimistic-lock="version" table="empleado">
+    <id name="idEmpleado" type="java.lang.Integer">
+      <column name="id_empleado"/>
+      <generator class="identity"/>
+    </id>
+    <property name="nif" type="string">
+      <column length="12" name="nif" not-null="true"/>
+    </property>
+    <property name="nombre" type="string">
+      <column length="20" name="nombre" not-null="true"/>
+    </property>
+    <property name="apellidos" type="string">
+      <column length="40" name="apellidos" not-null="true"/>
+    </property>
+    <property name="telefono" type="string">
+      <column length="40" name="telefono" not-null="true"/>
+    </property>
+    <property name="direccion" type="string">
+      <column length="40" name="direccion" not-null="true"/>
+    </property>
+    <property name="ciudad" type="string">
+      <column length="20" name="ciudad" not-null="true"/>
+    </property>
+    <property name="provincia" type="string">
+      <column length="20" name="provincia"/>
+    </property>
+    <property name="cp" type="string">
+      <column length="5" name="cp"/>
+    </property>
+    <property name="email" type="string">
+      <column length="40" name="email" not-null="true"/>
+    </property>
+    <property name="estado" type="boolean">
+      <column name="estado" not-null="true"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="usuarios" table="usuario">
+      <key>
+        <column name="id_empleado" not-null="true"/>
+      </key>
+      <one-to-many class="almar.entidades.Usuario"/>
+    </set>
+    <set fetch="select" inverse="true" lazy="true" name="pedidos" table="pedido">
+      <key>
+        <column name="empleado" not-null="true"/>
+      </key>
+      <one-to-many class="almar.entidades.Pedido"/>
+    </set>
+  </class>
+</hibernate-mapping>

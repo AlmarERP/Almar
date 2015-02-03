@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-feb-2015 23:52:33 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="datos" name="almar.entidades.Pedido" optimistic-lock="version" table="pedido">
+    <id name="idPedido" type="java.lang.Integer">
+      <column name="id_pedido"/>
+      <generator class="identity"/>
+    </id>
+    <many-to-one class="almar.entidades.Cliente" fetch="select" name="cliente">
+      <column name="id_cliente" not-null="true"/>
+    </many-to-one>
+    <many-to-one class="almar.entidades.Empleado" fetch="select" name="empleado">
+      <column name="empleado" not-null="true"/>
+    </many-to-one>
+    <many-to-one class="almar.entidades.FormaPago" fetch="select" name="formaPago">
+      <column name="forma_pago" not-null="true"/>
+    </many-to-one>
+    <property name="fecha" type="date">
+      <column length="0" name="fecha" not-null="true"/>
+    </property>
+    <property name="presupuesto" type="boolean">
+      <column name="presupuesto" not-null="true"/>
+    </property>
+    <property name="pagado" type="boolean">
+      <column name="pagado" not-null="true"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="lineasPedidos" table="lineas_pedido">
+      <key>
+        <column name="id_pedido" not-null="true"/>
+      </key>
+      <one-to-many class="almar.entidades.LineasPedido"/>
+    </set>
+  </class>
+</hibernate-mapping>

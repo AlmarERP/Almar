@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-feb-2015 23:52:33 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="datos" name="almar.entidades.LineasPedido" optimistic-lock="version" table="lineas_pedido">
+    <composite-id class="almar.entidades.LineasPedidoId" name="id">
+      <key-property name="idLinea" type="int">
+        <column name="id_linea"/>
+      </key-property>
+      <key-property name="idPedido" type="int">
+        <column name="id_pedido"/>
+      </key-property>
+    </composite-id>
+    <many-to-one class="almar.entidades.Articulo" fetch="select" name="articulo">
+      <column name="id_articulo" not-null="true"/>
+    </many-to-one>
+    <many-to-one class="almar.entidades.Pedido" fetch="select" insert="false" name="pedido" update="false">
+      <column name="id_pedido" not-null="true"/>
+    </many-to-one>
+    <property name="numArticulos" type="int">
+      <column name="num_articulos" not-null="true"/>
+    </property>
+  </class>
+</hibernate-mapping>

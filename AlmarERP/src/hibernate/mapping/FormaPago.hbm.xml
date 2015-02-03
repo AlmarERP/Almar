@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-feb-2015 23:52:33 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="datos" name="almar.entidades.FormaPago" optimistic-lock="version" table="forma_pago">
+    <id name="idFormaPago" type="java.lang.Integer">
+      <column name="id_forma_pago"/>
+      <generator class="identity"/>
+    </id>
+    <property name="descripcion" type="string">
+      <column length="45" name="descripcion" not-null="true"/>
+    </property>
+    <set fetch="select" inverse="true" lazy="true" name="pedidos" table="pedido">
+      <key>
+        <column name="forma_pago" not-null="true"/>
+      </key>
+      <one-to-many class="almar.entidades.Pedido"/>
+    </set>
+  </class>
+</hibernate-mapping>
