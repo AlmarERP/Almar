@@ -8,14 +8,14 @@
     <property name="hibernate.connection.username">root</property>
     <property name="hibernate.connection.password">abc123.</property>
     <property name="hibernate.show_sql">true</property>
-    <mapping resource="hibernate/mapping/FormaPago.hbm.xml"/>
-    <mapping resource="hibernate/mapping/Proveedor.hbm.xml"/>
-    <mapping resource="hibernate/mapping/Categoria.hbm.xml"/>
-    <mapping resource="hibernate/mapping/Pedido.hbm.xml"/>
-    <mapping resource="hibernate/mapping/LineasPedido.hbm.xml"/>
     <mapping resource="hibernate/mapping/Empleado.hbm.xml"/>
-    <mapping resource="hibernate/mapping/Cliente.hbm.xml"/>
-    <mapping resource="hibernate/mapping/Articulo.hbm.xml"/>
+    <mapping resource="hibernate/mapping/Categoria.hbm.xml"/>
     <mapping resource="hibernate/mapping/Usuario.hbm.xml"/>
+    <mapping resource="hibernate/mapping/FormaPago.hbm.xml"/>
+    <mapping resource="hibernate/mapping/LineasPedido.hbm.xml"/>
+    <mapping resource="hibernate/mapping/Articulo.hbm.xml"/>
+    <mapping resource="hibernate/mapping/Cliente.hbm.xml"/>
+    <mapping resource="hibernate/mapping/Proveedor.hbm.xml"/>
+    <mapping resource="hibernate/mapping/Pedido.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>
