@@ -42,6 +42,10 @@ public class BussinessException extends Exception {
         bussinessMessages.add(new BussinessMessage(null, cve.getLocalizedMessage()));
     }
 
+    public BussinessException(org.hibernate.exception.JDBCConnectionException cbd) {//Mensaje de error de conexión a la bd.
+        bussinessMessages.add(new BussinessMessage(null, "No se pudo conectar a la base de datos: " + cbd.getLocalizedMessage()));
+    }
+
     public Set<BussinessMessage> getBussinessMessages() {
         return bussinessMessages;
     }

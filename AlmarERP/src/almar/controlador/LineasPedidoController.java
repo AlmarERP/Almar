@@ -19,8 +19,8 @@ public class LineasPedidoController {
         lineasPedidoDAO.saveOrUpdate(lineasPedido);
     }
 
-    public void eliminar(LineasPedido lineasPedido) throws BussinessException {
-        lineasPedidoDAO.delete(lineasPedido.getId());
+    public void eliminar(LineasPedidoId lineasPedidoId) throws BussinessException {
+        lineasPedidoDAO.delete(lineasPedidoId.getIdLinea());//Revisar...
     }
 
     public void eliminarPorId(int i) throws BussinessException {

@@ -34,4 +34,7 @@ public class UsuarioController {
         return usuarioDAO.findAll();
     }
 
+    public Usuario buscarPorLogin(String username, String password) throws BussinessException {
+        return usuarioDAO.buscarPorLogin(username, password);
+    }
 }
