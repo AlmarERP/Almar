@@ -11,7 +11,10 @@ public class NifValidator implements ConstraintValidator<Nif, String> {
 
     @Override
     public boolean isValid(String nif, ConstraintValidatorContext context) {
-
+        if (nif.isEmpty()) {
+            System.out.println("Nif Vacio");
+            return false;
+        }
         String letras = "TRWAGMYFPDXBNJZSQVHLCKE";
         int valor;
 

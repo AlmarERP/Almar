@@ -6,7 +6,7 @@ import almar.persistencia.dao.EmpleadoDAOImplHibernate;
 import almar.excepciones.BussinessException;
 import java.util.List;
 
-public class EmpleadoController {
+public class EmpleadoController extends patronObserver.Subject {
 
     EmpleadoDAO empleadoDAO;
 
@@ -16,14 +16,17 @@ public class EmpleadoController {
 
     public void guardar(Empleado empleado) throws BussinessException {
         empleadoDAO.saveOrUpdate(empleado);
+        notifyObservers();
     }
 
     public void eliminar(Empleado empleado) throws BussinessException {
         empleadoDAO.delete(empleado.getIdEmpleado());
+        notifyObservers();
     }
 
     public void eliminarPorId(int i) throws BussinessException {
         empleadoDAO.delete(i);
+        notifyObservers();
     }
 
     public Empleado buscarPorId(int id) throws BussinessException {

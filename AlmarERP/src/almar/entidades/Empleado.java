@@ -33,6 +33,20 @@ public class Empleado implements java.io.Serializable {
     public Empleado() {
     }
 
+    public Empleado(Integer idEmpleado, String nif, String nombre, String apellidos, String telefono, String direccion, String ciudad, String provincia, String cp, String email, boolean estado) {
+        this.idEmpleado = idEmpleado;
+        this.nif = nif;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.telefono = telefono;
+        this.direccion = direccion;
+        this.ciudad = ciudad;
+        this.provincia = provincia;
+        this.cp = cp;
+        this.email = email;
+        this.estado = estado;
+    }
+    
     public Empleado(String nif, String nombre, String apellidos, String telefono, String direccion, String ciudad, String email, boolean estado) {
         this.nif = nif;
         this.nombre = nombre;

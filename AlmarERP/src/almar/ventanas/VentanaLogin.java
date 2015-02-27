@@ -33,7 +33,7 @@ public class VentanaLogin extends javax.swing.JFrame {
 
     public VentanaLogin() {
         initComponents();
-        iniciarConexionBdHibernate();
+        HibernateUtil.buildSessionFactory();
         usuario = new Usuario();
     }
 
@@ -269,14 +269,6 @@ public class VentanaLogin extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     /**
-     * Inicia la sesion en la bd.
-     */
-    private void iniciarConexionBdHibernate() {
-        HibernateUtil.buildSessionFactory();
-        HibernateUtil.openSessionAndBindToThread();
-    }
-
-    /**
      * Si el usuario es correcto inicia sesión si no muestra un mensaje.
      *
      * @throws HeadlessException
@@ -285,7 +277,6 @@ public class VentanaLogin extends javax.swing.JFrame {
         if (validarUsuario(jTextFieldNombre.getText(), new String(jPassword.getPassword()))) {
             JOptionPane.showMessageDialog(this, "<html><p style=\"color:green\">Hola usuario " + usuario.getNombre() + "</p></html>", "Almar-ERP", JOptionPane.PLAIN_MESSAGE);
             lanzarVentanaPrincipal();
-            HibernateUtil.closeSessionFactory();
             dispose();
         } else {
             JOptionPane.showMessageDialog(null, "No se ha encontrado el usuario o la contraseña es incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
@@ -306,7 +297,7 @@ public class VentanaLogin extends javax.swing.JFrame {
      * @return
      */
     private boolean validarUsuario(String nombre, String password) {
-
+        HibernateUtil.openSessionAndBindToThread();
         UsuarioController usuarioController;
         this.usuario = null;
         try {
