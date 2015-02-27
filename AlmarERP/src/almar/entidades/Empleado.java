@@ -13,10 +13,10 @@ import org.hibernate.validator.constraints.*;
 public class Empleado implements java.io.Serializable {
 
     private Integer idEmpleado;
-    @NotBlank
     @Caption("Nif")
     @Nif
     private String nif;
+    @NotBlank
     private String nombre;
     private String apellidos;
     private String telefono;

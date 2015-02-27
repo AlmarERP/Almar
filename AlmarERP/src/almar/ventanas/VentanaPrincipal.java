@@ -1,5 +1,6 @@
 package almar.ventanas;
 
+import almar.entidades.Usuario;
 import javax.swing.ImageIcon;
 
 /**
@@ -8,13 +9,18 @@ import javax.swing.ImageIcon;
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
 
+    private Usuario usuario;
+
     /**
      * Creates new form Principal
      */
-    public VentanaPrincipal() {
+    public VentanaPrincipal(Usuario usuario) {
+        this.usuario = usuario;
         this.setExtendedState(MAXIMIZED_BOTH);//Iniciar maximizado
         initComponents();
-
+        if (!usuario.isAdmin()) {//Si no es admin oculta usuarios.
+            jMenuItemUsuarios.setVisible(false);
+        }
     }
 
     /**
@@ -31,7 +37,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItemEmpleados = new javax.swing.JMenuItem();
+        jMenuItemUsuarios = new javax.swing.JMenuItem();
         jMenuItemSalir = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
@@ -53,13 +60,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jMenu1.setText("Archivo");
 
-        jMenuItem1.setText("Empleados");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemEmpleados.setText("Empleados");
+        jMenuItemEmpleados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jMenuItemEmpleadosActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(jMenuItemEmpleados);
+
+        jMenuItemUsuarios.setText("Usuarios");
+        jMenuItemUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemUsuariosActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItemUsuarios);
 
         jMenuItemSalir.setText("Salir");
         jMenuItemSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -104,47 +119,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jMenuItemSalirActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-       VentanaEmpleados ventanaEmpleados = new VentanaEmpleados(this, true);
-       ventanaEmpleados.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    private void jMenuItemEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEmpleadosActionPerformed
+        VentanaEmpleados ventanaEmpleados = new VentanaEmpleados(this, true);
+        ventanaEmpleados.setVisible(true);
+    }//GEN-LAST:event_jMenuItemEmpleadosActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Metal".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VentanaPrincipal().setVisible(true);
-
-            }
-        });
-    }
+    private void jMenuItemUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemUsuariosActionPerformed
+        VentanaUsuarios ventanaUsuarios = new VentanaUsuarios(this, true);
+        ventanaUsuarios.setVisible(true);
+    }//GEN-LAST:event_jMenuItemUsuariosActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -153,8 +136,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItemEmpleados;
     private javax.swing.JMenuItem jMenuItemSalir;
+    private javax.swing.JMenuItem jMenuItemUsuarios;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 

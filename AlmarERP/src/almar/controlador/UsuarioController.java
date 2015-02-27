@@ -5,8 +5,9 @@ import almar.persistencia.dao.UsuarioDAO;
 import almar.persistencia.dao.UsuarioDAOImplHibernate;
 import almar.excepciones.BussinessException;
 import java.util.List;
+import patronObserver.Subject;
 
-public class UsuarioController {
+public class UsuarioController extends Subject {
 
     UsuarioDAO usuarioDAO;
 
@@ -16,14 +17,17 @@ public class UsuarioController {
 
     public void guardar(Usuario usuario) throws BussinessException {
         usuarioDAO.saveOrUpdate(usuario);
+        notifyObservers();
     }
 
     public void eliminar(Usuario usuario) throws BussinessException {
         usuarioDAO.delete(usuario.getIdUsuario());
+        notifyObservers();
     }
 
     public void eliminarPorId(int i) throws BussinessException {
         usuarioDAO.delete(i);
+        notifyObservers();
     }
 
     public Usuario buscarPorId(int id) throws BussinessException {

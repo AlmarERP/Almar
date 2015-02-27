@@ -285,7 +285,7 @@ public class VentanaLogin extends javax.swing.JFrame {
     }
 
     private void lanzarVentanaPrincipal() {
-        VentanaPrincipal ventanaPrincipal = new VentanaPrincipal();
+        VentanaPrincipal ventanaPrincipal = new VentanaPrincipal(usuario);
         ventanaPrincipal.setVisible(true);
     }
 
