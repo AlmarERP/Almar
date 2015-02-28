@@ -1,10 +1,10 @@
 package almar.ventanas;
 
-import almar.listmodels.EmpleadosListModel;
-import almar.controlador.EmpleadoController;
+import almar.listmodels.ClientesListModel;
+import almar.controlador.ClienteController;
 import almar.excepciones.BussinessException;
 import almar.excepciones.BussinessMessage;
-import almar.entidades.Empleado;
+import almar.entidades.Cliente;
 import hibernate.util.HibernateUtil;
 import java.util.List;
 import javax.swing.JCheckBox;
@@ -16,20 +16,20 @@ import patronObserver.Subject;
  *
  * @author Alberto
  */
-public class VentanaEmpleados extends javax.swing.JDialog implements patronObserver.Observer {
+public class VentanaClientes extends javax.swing.JDialog implements patronObserver.Observer {
 
-    private EmpleadoController empleadoController;
-    private EmpleadosListModel empleadosListModel;
-    private List listaEmpleados;
+    private ClienteController clienteController;
+    private ClientesListModel clientesListModel;
+    private List listaClientes;
 
-    public VentanaEmpleados(java.awt.Frame parent, boolean modal) {
+    public VentanaClientes(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         botonesVisibles(true, true, true, false, false);
-        this.empleadoController = new EmpleadoController();
-        empleadoController.registerObserver(this);
-        empleadosListModel = new EmpleadosListModel();
-        jList1.setModel(empleadosListModel);
+        this.clienteController = new ClienteController();
+        clienteController.registerObserver(this);
+        clientesListModel = new ClientesListModel();
+        jList1.setModel(clientesListModel);
         actualizarJlist();
     }
 
@@ -40,7 +40,7 @@ public class VentanaEmpleados extends javax.swing.JDialog implements patronObser
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTF_idEmpleado = new javax.swing.JTextField();
+        jTF_idCliente = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jTF_Nif = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -59,8 +59,6 @@ public class VentanaEmpleados extends javax.swing.JDialog implements patronObser
         jTF_CP = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jTF_Email = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        jCheckBox_Activo = new javax.swing.JCheckBox();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
@@ -80,10 +78,10 @@ public class VentanaEmpleados extends javax.swing.JDialog implements patronObser
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setText("id Empleado:");
+        jLabel1.setText("id Cliente:");
 
-        jTF_idEmpleado.setEditable(false);
-        jTF_idEmpleado.setEnabled(false);
+        jTF_idCliente.setEditable(false);
+        jTF_idCliente.setEnabled(false);
 
         jLabel2.setText("Nif:");
 
@@ -121,10 +119,6 @@ public class VentanaEmpleados extends javax.swing.JDialog implements patronObser
 
         jTF_Email.setEditable(false);
 
-        jLabel11.setText("Activo:");
-
-        jCheckBox_Activo.setEnabled(false);
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -134,7 +128,6 @@ public class VentanaEmpleados extends javax.swing.JDialog implements patronObser
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel11)
                     .addComponent(jLabel6)
                     .addComponent(jLabel7)
                     .addComponent(jLabel8)
@@ -142,73 +135,68 @@ public class VentanaEmpleados extends javax.swing.JDialog implements patronObser
                     .addComponent(jLabel10)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel4))
-                .addGap(18, 18, 18)
+                .addGap(21, 21, 21)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox_Activo)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTF_Nif, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTF_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTF_Email, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTF_CP, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTF_Provincia, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTF_Ciudad, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTF_Direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jTF_Apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTF_Telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jTF_idEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jTF_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTF_Email, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTF_CP, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTF_Provincia, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTF_Ciudad, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTF_Direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jTF_Apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTF_Telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTF_idCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTF_Nif, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jTF_idEmpleado, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(6, 6, 6)
-                .addComponent(jTF_Nif, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTF_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(jTF_Apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTF_Telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jTF_Direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(7, 7, 7)
-                .addComponent(jTF_Ciudad, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(jTF_Provincia, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(jTF_CP, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(jTF_Email, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(jCheckBox_Activo))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jTF_idCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(jTF_Nif, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTF_Nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)
+                        .addComponent(jTF_Apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(3, 3, 3)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTF_Telefono, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addComponent(jTF_Direccion, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(7, 7, 7)
+                        .addComponent(jTF_Ciudad, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)
+                        .addComponent(jTF_Provincia, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)
+                        .addComponent(jTF_CP, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)
+                        .addComponent(jTF_Email, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(26, 26, 26))
         );
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 100, 390, -1));
@@ -220,7 +208,7 @@ public class VentanaEmpleados extends javax.swing.JDialog implements patronObser
         });
         jScrollPane1.setViewportView(jList1);
 
-        jLabel12.setText("Lista de Empleados");
+        jLabel12.setText("Lista de Clientes");
 
         btnAtras.setText("<");
         btnAtras.addActionListener(new java.awt.event.ActionListener() {
@@ -260,11 +248,11 @@ public class VentanaEmpleados extends javax.swing.JDialog implements patronObser
                                 .addGap(9, 9, 9)
                                 .addComponent(btnSiguiente))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(jLabel12))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(jLabel12)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -382,14 +370,14 @@ public class VentanaEmpleados extends javax.swing.JDialog implements patronObser
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         try {
-            Empleado empleado;
-            if (jTF_idEmpleado.getText().isEmpty()) {//Si es nuevo no lleva id porque se crea autoincrement en la bd:
-                empleado = new Empleado(jTF_Nif.getText(), jTF_Nombre.getText(), jTF_Apellidos.getText(), jTF_Telefono.getText(), jTF_Direccion.getText(), jTF_Ciudad.getText(), jTF_Provincia.getText(), jTF_CP.getText(), jTF_Email.getText(), jCheckBox_Activo.isSelected(), null, null);
+            Cliente cliente;
+            if (jTF_idCliente.getText().isEmpty()) {//Si es nuevo no lleva id porque se crea autoincrement en la bd:
+                cliente = new Cliente(jTF_Nif.getText(), jTF_Nombre.getText(), jTF_Apellidos.getText(), jTF_Telefono.getText(), jTF_Email.getText(), jTF_Direccion.getText(), jTF_Ciudad.getText(), jTF_Provincia.getText(), jTF_CP.getText(), null);
 
             } else {//Si es actualización lleva el id:
-                empleado = new Empleado(Integer.parseInt(jTF_idEmpleado.getText()), jTF_Nif.getText(), jTF_Nombre.getText(), jTF_Apellidos.getText(), jTF_Telefono.getText(), jTF_Direccion.getText(), jTF_Ciudad.getText(), jTF_Provincia.getText(), jTF_CP.getText(), jTF_Email.getText(), jCheckBox_Activo.isSelected());
+                cliente = new Cliente(Integer.parseInt(jTF_idCliente.getText()), jTF_Nif.getText(), jTF_Nombre.getText(), jTF_Apellidos.getText(), jTF_Telefono.getText(), jTF_Email.getText(), jTF_Direccion.getText(), jTF_Ciudad.getText(), jTF_Provincia.getText(), jTF_CP.getText());
             }
-            empleadoController.guardar(empleado);
+            clienteController.guardar(cliente);
             jList1.clearSelection();
             jList1ValueChanged(null);//Vuelve a poner en los campos el valor selecionado del jList.
             botonesVisibles(true, true, true, false, false);
@@ -402,8 +390,8 @@ public class VentanaEmpleados extends javax.swing.JDialog implements patronObser
     }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     private void jButtonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarActionPerformed
-        if (jTF_idEmpleado.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "No se ha seleccionado ningun empleado de la lista");
+        if (jTF_idCliente.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No se ha seleccionado ningun cliente de la lista");
         } else {
             activarCampos(true);
             botonesVisibles(false, false, false, true, true);
@@ -412,12 +400,12 @@ public class VentanaEmpleados extends javax.swing.JDialog implements patronObser
 
     private void jButtonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarActionPerformed
         try {
-            if (jTF_idEmpleado.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "No se ha seleccionado ningun empleado de la lista");
+            if (jTF_idCliente.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "No se ha seleccionado ningun cliente de la lista");
             } else {
-                int i = JOptionPane.showConfirmDialog(this, "¿Esta seguro de que quiere eliminar a ese empleado?", "Eliminar Empleado", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                int i = JOptionPane.showConfirmDialog(this, "¿Esta seguro de que quiere eliminar a ese cliente?", "Eliminar Cliente", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
                 if (i == 0) {
-                    empleadoController.eliminarPorId(Integer.parseInt(jTF_idEmpleado.getText()));
+                    clienteController.eliminarPorId(Integer.parseInt(jTF_idCliente.getText()));
                     jList1.clearSelection();
                     jList1ValueChanged(null);//Vuelve a poner en los campos el valor selecionado del jList.
                 }
@@ -439,26 +427,25 @@ public class VentanaEmpleados extends javax.swing.JDialog implements patronObser
         if (jList1.isSelectionEmpty()) {
             limpiarCampos();
         } else {
-            Empleado empleadoSelec = (Empleado) listaEmpleados.get(jList1.getSelectedIndex());
-            jTF_idEmpleado.setText(empleadoSelec.getIdEmpleado().toString());
-            jTF_Nif.setText(empleadoSelec.getNif());
-            jTF_Nombre.setText(empleadoSelec.getNombre());
-            jTF_Apellidos.setText(empleadoSelec.getApellidos());
-            jTF_Telefono.setText(empleadoSelec.getTelefono());
-            jTF_Direccion.setText(empleadoSelec.getDireccion());
-            jTF_Ciudad.setText(empleadoSelec.getCiudad());
-            jTF_Provincia.setText(empleadoSelec.getProvincia());
-            jTF_CP.setText(empleadoSelec.getCp());
-            jTF_Email.setText(empleadoSelec.getEmail());
-            jCheckBox_Activo.setSelected(empleadoSelec.isEstado());
+            Cliente clienteSelec = (Cliente) listaClientes.get(jList1.getSelectedIndex());
+            jTF_idCliente.setText(clienteSelec.getIdCliente().toString());
+            jTF_Nif.setText(clienteSelec.getNif());
+            jTF_Nombre.setText(clienteSelec.getNombre());
+            jTF_Apellidos.setText(clienteSelec.getApellidos());
+            jTF_Telefono.setText(clienteSelec.getTelefono());
+            jTF_Direccion.setText(clienteSelec.getDireccion());
+            jTF_Ciudad.setText(clienteSelec.getCiudad());
+            jTF_Provincia.setText(clienteSelec.getProvincia());
+            jTF_CP.setText(clienteSelec.getCp());
+            jTF_Email.setText(clienteSelec.getEmail());
         }
     }//GEN-LAST:event_jList1ValueChanged
 
     private void actualizarJlist() {
         HibernateUtil.openSessionAndBindToThread();
         try {
-            listaEmpleados = empleadoController.listaEmpleados();
-            empleadosListModel.cargar(listaEmpleados);
+            listaClientes = clienteController.listaClientes();
+            clientesListModel.cargar(listaClientes);
 
         } catch (BussinessException be) {
             for (BussinessMessage bussinessMessage : be.getBussinessMessages()) {
@@ -481,13 +468,9 @@ public class VentanaEmpleados extends javax.swing.JDialog implements patronObser
         for (Object obj : jPanel2.getComponents()) {
             if (obj instanceof JTextField) {
                 JTextField temp = (JTextField) obj;
-                if (temp != jTF_idEmpleado) {//El campo del id no quiero que se active.
+                if (temp != jTF_idCliente) {//El campo del id no quiero que se active.
                     temp.setEditable(estado);
                 }
-            }
-            if (obj instanceof JCheckBox) {
-                JCheckBox temp = (JCheckBox) obj;
-                temp.setEnabled(estado);
             }
         }
     }
@@ -497,10 +480,6 @@ public class VentanaEmpleados extends javax.swing.JDialog implements patronObser
             if (obj instanceof JTextField) {
                 JTextField temp = (JTextField) obj;
                 temp.setText(null);
-            }
-            if (obj instanceof JCheckBox) {
-                JCheckBox temp = (JCheckBox) obj;
-                temp.setSelected(false);
             }
         }
     }
@@ -522,20 +501,21 @@ public class VentanaEmpleados extends javax.swing.JDialog implements patronObser
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VentanaClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                VentanaEmpleados dialog = new VentanaEmpleados(new javax.swing.JFrame(), true);
+                VentanaClientes dialog = new VentanaClientes(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -556,10 +536,8 @@ public class VentanaEmpleados extends javax.swing.JDialog implements patronObser
     private javax.swing.JButton jButtonLimpiar;
     private javax.swing.JButton jButtonModificar;
     private javax.swing.JButton jButtonNuevo;
-    private javax.swing.JCheckBox jCheckBox_Activo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -584,12 +562,12 @@ public class VentanaEmpleados extends javax.swing.JDialog implements patronObser
     private javax.swing.JTextField jTF_Nombre;
     private javax.swing.JTextField jTF_Provincia;
     private javax.swing.JTextField jTF_Telefono;
-    private javax.swing.JTextField jTF_idEmpleado;
+    private javax.swing.JTextField jTF_idCliente;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void update(Subject subject) {
-        if (subject instanceof EmpleadoController) {
+        if (subject instanceof ClienteController) {
             actualizarJlist();
         }
     }

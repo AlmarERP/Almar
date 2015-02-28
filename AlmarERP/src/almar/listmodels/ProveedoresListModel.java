@@ -1,14 +1,14 @@
-package almar.ventanas;
+package almar.listmodels;
 
-import almar.entidades.Empleado;
+import almar.entidades.Proveedor;
 import java.util.List;
 import javax.swing.DefaultListModel;
 
 /**
  *
- * @author dam105
+ * @author Alberto
  */
-public class EmpleadosListModel extends DefaultListModel {
+public class ProveedoresListModel extends DefaultListModel {
 
     List datos;
 
@@ -25,8 +25,8 @@ public class EmpleadosListModel extends DefaultListModel {
     //que datos??
     @Override
     public Object getElementAt(int index) {
-        Empleado temp = (Empleado)datos.get(index);
-        String cadena = temp.getNombre()+" "+temp.getApellidos();
+        Proveedor temp = (Proveedor) datos.get(index);
+        String cadena = temp.getNombre();
         return cadena;
 
     }

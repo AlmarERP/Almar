@@ -54,6 +54,19 @@ public class Cliente implements java.io.Serializable {
         this.pedidos = pedidos;
     }
 
+    public Cliente(Integer idCliente, String nif, String nombre, String apellidos, String telefono, String email, String direccion, String ciudad, String provincia, String cp) {
+        this.idCliente = idCliente;
+        this.nif = nif;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.telefono = telefono;
+        this.email = email;
+        this.direccion = direccion;
+        this.ciudad = ciudad;
+        this.provincia = provincia;
+        this.cp = cp;
+    }
+
     public Integer getIdCliente() {
         return this.idCliente;
     }

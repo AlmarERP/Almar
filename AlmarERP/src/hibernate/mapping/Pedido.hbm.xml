@@ -7,13 +7,13 @@
       <column name="id_pedido"/>
       <generator class="identity"/>
     </id>
-    <many-to-one class="almar.entidades.Cliente" fetch="select" name="cliente">
+    <many-to-one class="almar.entidades.Cliente" fetch="select" name="cliente" lazy = "false">
       <column name="id_cliente" not-null="true"/>
     </many-to-one>
-    <many-to-one class="almar.entidades.Empleado" fetch="select" name="empleado">
+    <many-to-one class="almar.entidades.Empleado" fetch="select" name="empleado" lazy = "false">
       <column name="empleado" not-null="true"/>
     </many-to-one>
-    <many-to-one class="almar.entidades.FormaPago" fetch="select" name="formaPago">
+    <many-to-one class="almar.entidades.FormaPago" fetch="select" name="formaPago" lazy = "false">
       <column name="forma_pago" not-null="true"/>
     </many-to-one>
     <property name="fecha" type="date">

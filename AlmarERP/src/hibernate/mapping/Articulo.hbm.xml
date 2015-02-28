@@ -7,10 +7,10 @@
       <column name="id_articulo"/>
       <generator class="identity"/>
     </id>
-    <many-to-one class="almar.entidades.Categoria" fetch="select" name="categoria">
+    <many-to-one class="almar.entidades.Categoria" fetch="select" name="categoria" lazy = "false">
       <column name="id_categoria" not-null="true"/>
     </many-to-one>
-    <many-to-one class="almar.entidades.Proveedor" fetch="select" name="proveedor">
+    <many-to-one class="almar.entidades.Proveedor" fetch="select" name="proveedor" lazy = "false">
       <column name="id_proveedor" not-null="true"/>
     </many-to-one>
     <property name="codFabricante" type="string">

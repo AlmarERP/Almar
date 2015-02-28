@@ -7,7 +7,7 @@
       <column name="id_usuario"/>
       <generator class="identity"/>
     </id>
-    <many-to-one class="almar.entidades.Empleado" fetch="select" name="empleado">
+    <many-to-one class="almar.entidades.Empleado" fetch="select" name="empleado" lazy = "false">
       <column name="id_empleado" not-null="true"/>
     </many-to-one>
     <property name="nombre" type="string">

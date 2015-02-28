@@ -41,6 +41,17 @@ public class Articulo implements java.io.Serializable {
         this.lineasPedidos = lineasPedidos;
     }
 
+    public Articulo(Integer idArticulo, Categoria categoria, Proveedor proveedor, String codFabricante, int stock, String nombre, int precio, String descripcion) {
+        this.idArticulo = idArticulo;
+        this.categoria = categoria;
+        this.proveedor = proveedor;
+        this.codFabricante = codFabricante;
+        this.stock = stock;
+        this.nombre = nombre;
+        this.precio = precio;
+        this.descripcion = descripcion;
+    }
+
     public Integer getIdArticulo() {
         return this.idArticulo;
     }

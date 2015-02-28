@@ -25,6 +25,11 @@ public class FormaPago implements java.io.Serializable {
         this.pedidos = pedidos;
     }
 
+    public FormaPago(Integer idFormaPago, String descripcion) {
+        this.idFormaPago = idFormaPago;
+        this.descripcion = descripcion;
+    }
+
     public Integer getIdFormaPago() {
         return this.idFormaPago;
     }

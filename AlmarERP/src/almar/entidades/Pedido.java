@@ -41,6 +41,17 @@ public class Pedido implements java.io.Serializable {
         this.lineasPedidos = lineasPedidos;
     }
 
+    public Pedido(Integer idPedido, Cliente cliente, Empleado empleado, FormaPago formaPago, Date fecha, boolean presupuesto, boolean pagado) {
+        this.idPedido = idPedido;
+        this.cliente = cliente;
+        this.empleado = empleado;
+        this.formaPago = formaPago;
+        this.fecha = fecha;
+        this.presupuesto = presupuesto;
+        this.pagado = pagado;
+    }
+
+    
     public Integer getIdPedido() {
         return this.idPedido;
     }

@@ -5,8 +5,9 @@ import almar.persistencia.dao.FormaPagoDAO;
 import almar.persistencia.dao.FormaPagoDAOImplHibernate;
 import almar.excepciones.BussinessException;
 import java.util.List;
+import patronObserver.Subject;
 
-public class FormaPagoController {
+public class FormaPagoController extends Subject {
 
     FormaPagoDAO formaPagoDAO;
 
@@ -16,14 +17,17 @@ public class FormaPagoController {
 
     public void guardar(FormaPago formaPago) throws BussinessException {
         formaPagoDAO.saveOrUpdate(formaPago);
+        notifyObservers();
     }
 
     public void eliminar(FormaPago formaPago) throws BussinessException {
         formaPagoDAO.delete(formaPago.getIdFormaPago());
+        notifyObservers();
     }
 
     public void eliminarPorId(int i) throws BussinessException {
         formaPagoDAO.delete(i);
+        notifyObservers();
     }
 
     public FormaPago buscarPorId(int id) throws BussinessException {
