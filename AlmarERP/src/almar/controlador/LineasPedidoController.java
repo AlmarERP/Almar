@@ -21,8 +21,8 @@ public class LineasPedidoController extends Subject {
         notifyObservers();
     }
 
-    public void eliminar(LineasPedidoId lineasPedidoId) throws BussinessException {
-        lineasPedidoDAO.delete(lineasPedidoId.getIdLinea());//Revisar...
+    public void eliminar(LineasPedido lineasPedido) throws BussinessException {
+        lineasPedidoDAO.delete(lineasPedido.getId().getIdLinea());//Revisar...
         notifyObservers();
     }
 

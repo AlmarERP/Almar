@@ -5,16 +5,19 @@ import almar.controlador.PedidoController;
 import almar.controlador.ClienteController;
 import almar.controlador.EmpleadoController;
 import almar.controlador.FormaPagoController;
+import almar.controlador.LineasPedidoController;
 import almar.excepciones.BussinessException;
 import almar.excepciones.BussinessMessage;
 import almar.entidades.Pedido;
 import almar.entidades.Cliente;
 import almar.entidades.Empleado;
 import almar.entidades.FormaPago;
+import almar.listmodels.LineasPedidoTableModel;
 import com.toedter.calendar.JDateChooser;
 import hibernate.util.HibernateUtil;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -28,6 +31,7 @@ import patronObserver.Subject;
 public class VentanaPedidos extends javax.swing.JDialog implements patronObserver.Observer {
 
     private PedidoController pedidoController;
+    private LineasPedidoController lineasPedidoController;
     private ClienteController clienteController;
     private EmpleadoController empleadoController;
     private FormaPagoController formaPagoController;
@@ -36,6 +40,8 @@ public class VentanaPedidos extends javax.swing.JDialog implements patronObserve
     private List listaClientes;
     private List listaEmpleados;
     private List listaFormaPago;
+    private Set listaLineasPedido;
+    private LineasPedidoTableModel lineasPedidoTableModel;
 
     public VentanaPedidos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -43,11 +49,14 @@ public class VentanaPedidos extends javax.swing.JDialog implements patronObserve
         botonesVisibles(true, true, true, false, false);
         pedidoController = new PedidoController();
         pedidoController.registerObserver(this);
+        lineasPedidoController = new LineasPedidoController();
+        lineasPedidoController.registerObserver(this);
         clienteController = new ClienteController();
         empleadoController = new EmpleadoController();
         formaPagoController = new FormaPagoController();
         pedidosListModel = new PedidosListModel();
         jList1.setModel(pedidosListModel);
+        lineasPedidoTableModel = new LineasPedidoTableModel();
         actualizarJlist();
     }
 
@@ -84,8 +93,18 @@ public class VentanaPedidos extends javax.swing.JDialog implements patronObserve
         jButtonGuardar = new javax.swing.JButton();
         jButtonEliminar = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jButtonLineas = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -180,10 +199,10 @@ public class VentanaPedidos extends javax.swing.JDialog implements patronObserve
                             .addComponent(jComboBoxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(33, 33, 33)
                         .addComponent(jCheckBox_Pagado)))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 110, 390, 180));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 80, 390, 160));
 
         jList1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
@@ -208,7 +227,7 @@ public class VentanaPedidos extends javax.swing.JDialog implements patronObserve
             }
         });
 
-        jButtonLimpiar.setText("Limpiar");
+        jButtonLimpiar.setText("Limpiar/Refrescar");
         jButtonLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonLimpiarActionPerformed(evt);
@@ -222,21 +241,19 @@ public class VentanaPedidos extends javax.swing.JDialog implements patronObserve
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
-                        .addComponent(jLabel12))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(40, 40, 40)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jButtonLimpiar))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(btnAtras)
-                                .addGap(9, 9, 9)
-                                .addComponent(btnSiguiente)))))
+                        .addComponent(btnAtras)
+                        .addGap(9, 9, 9)
+                        .addComponent(btnSiguiente))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(jLabel12))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jButtonLimpiar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -250,12 +267,12 @@ public class VentanaPedidos extends javax.swing.JDialog implements patronObserve
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAtras)
                     .addComponent(btnSiguiente))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonLimpiar)
-                .addGap(21, 21, 21))
+                .addGap(26, 26, 26))
         );
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, 170, 400));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 170, 400));
 
         jButtonNuevo.setText("Nuevo");
         jButtonNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -322,7 +339,72 @@ public class VentanaPedidos extends javax.swing.JDialog implements patronObserve
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 440, 550, -1));
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 480, 550, -1));
+
+        jLabel14.setText("Lineas del pedido:");
+
+        jButtonLineas.setText("Agregar/Modificar/Eliminar Lineas");
+        jButtonLineas.setEnabled(false);
+        jButtonLineas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLineasActionPerformed(evt);
+            }
+        });
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Articulo", "Cantidad", "Precio Unidad", "Precio Total"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.setEnabled(false);
+        jScrollPane3.setViewportView(jTable1);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addComponent(jLabel14)
+                        .addGap(102, 102, 102)
+                        .addComponent(jButtonLineas)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(jButtonLineas))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 240, 500, 230));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
 
@@ -342,11 +424,8 @@ public class VentanaPedidos extends javax.swing.JDialog implements patronObserve
         }
     }//GEN-LAST:event_btnSiguienteActionPerformed
 
-    private void jButtonLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarActionPerformed
-        jList1.clearSelection();
-    }//GEN-LAST:event_jButtonLimpiarActionPerformed
-
     private void jButtonNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevoActionPerformed
+        jList1.clearSelection();
         activarCampos(true);
         limpiarCampos();
         cargarComboBoxClientes();
@@ -395,9 +474,12 @@ public class VentanaPedidos extends javax.swing.JDialog implements patronObserve
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jList1ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1ValueChanged
+
         if (jList1.isSelectionEmpty()) {
             limpiarCampos();
+            jButtonLineas.setEnabled(false);
         } else {
+            jButtonLineas.setEnabled(true);
             cargarComboBoxClientes();
             cargarComboBoxEmpleados();
             cargarComboBoxFormaPago();
@@ -409,6 +491,10 @@ public class VentanaPedidos extends javax.swing.JDialog implements patronObserve
             jDateChooser.setDate(pedidoSelec.getFecha());
             jCheckBox_Pagado.setSelected(pedidoSelec.isPagado());
             jCheckBox_Presupuesto.setSelected(pedidoSelec.isPresupuesto());
+            listaLineasPedido = pedidoSelec.getLineasPedidos();
+            lineasPedidoTableModel.cargar(listaLineasPedido);
+            jTable1.setModel(lineasPedidoTableModel);
+            jTable1.setVisible(true);
         }
     }//GEN-LAST:event_jList1ValueChanged
 
@@ -431,12 +517,32 @@ public class VentanaPedidos extends javax.swing.JDialog implements patronObserve
         }
     }//GEN-LAST:event_jButtonEliminarActionPerformed
 
+    private void jButtonLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimpiarActionPerformed
+        actualizarJlist();
+        jList1.clearSelection();
+    }//GEN-LAST:event_jButtonLimpiarActionPerformed
+
+    private void jButtonLineasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLineasActionPerformed
+        if (jTF_idPedido.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "No se ha seleccionado ningun pedido de la lista");
+        } else {
+            VentanaLineasPedido ventanaLineasPedido = new VentanaLineasPedido(this, true, (Pedido) listaPedidos.get(jList1.getSelectedIndex()));
+            ventanaLineasPedido.setVisible(true);
+        }
+    }//GEN-LAST:event_jButtonLineasActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        actualizarJlist();
+        int index = jList1.getSelectedIndex();
+        jList1.clearSelection();
+        jList1.setSelectedIndex(index);
+    }//GEN-LAST:event_formWindowActivated
+
     private void actualizarJlist() {
         HibernateUtil.openSessionAndBindToThread();
         try {
             listaPedidos = pedidoController.listaPedidos();
             pedidosListModel.cargar(listaPedidos);
-
         } catch (BussinessException be) {
             for (BussinessMessage bussinessMessage : be.getBussinessMessages()) {
                 JOptionPane.showMessageDialog(null, bussinessMessage.toString());
@@ -452,7 +558,6 @@ public class VentanaPedidos extends javax.swing.JDialog implements patronObserve
             jComboBoxCliente.removeAllItems();
             listaClientes = clienteController.listaClientes();
             Iterator<Cliente> i = listaClientes.iterator();
-
             Cliente temp;
             while (i.hasNext()) {
                 temp = i.next();
@@ -473,7 +578,6 @@ public class VentanaPedidos extends javax.swing.JDialog implements patronObserve
             jComboBoxEmpleado.removeAllItems();
             listaEmpleados = empleadoController.listaEmpleados();
             Iterator<Empleado> i = listaEmpleados.iterator();
-
             Empleado temp;
             while (i.hasNext()) {
                 temp = i.next();
@@ -494,7 +598,6 @@ public class VentanaPedidos extends javax.swing.JDialog implements patronObserve
             jComboBoxFormaPago.removeAllItems();
             listaFormaPago = formaPagoController.listaFormaPagos();
             Iterator<FormaPago> i = listaFormaPago.iterator();
-
             FormaPago temp;
             while (i.hasNext()) {
                 temp = i.next();
@@ -518,6 +621,7 @@ public class VentanaPedidos extends javax.swing.JDialog implements patronObserve
     }
 
     private void activarCampos(boolean estado) {
+        jTable1.setEnabled(estado);
         for (Object obj : jPanel2.getComponents()) {
             if (obj instanceof JTextField) {
                 JTextField temp = (JTextField) obj;
@@ -541,6 +645,7 @@ public class VentanaPedidos extends javax.swing.JDialog implements patronObserve
     }
 
     private void limpiarCampos() {
+        jTable1.setVisible(false);
         for (Object obj : jPanel2.getComponents()) {
             if (obj instanceof JTextField) {
                 JTextField temp = (JTextField) obj;
@@ -613,6 +718,7 @@ public class VentanaPedidos extends javax.swing.JDialog implements patronObserve
     private javax.swing.JButton jButtonEliminar;
     private javax.swing.JButton jButtonGuardar;
     private javax.swing.JButton jButtonLimpiar;
+    private javax.swing.JButton jButtonLineas;
     private javax.swing.JButton jButtonModificar;
     private javax.swing.JButton jButtonNuevo;
     private javax.swing.JCheckBox jCheckBox_Pagado;
@@ -625,6 +731,7 @@ public class VentanaPedidos extends javax.swing.JDialog implements patronObserve
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -634,12 +741,16 @@ public class VentanaPedidos extends javax.swing.JDialog implements patronObserve
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTF_idPedido;
+    public static javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void update(Subject subject) {
+        System.out.println("Por update: " + subject.getClass());
         if (subject instanceof PedidoController) {
             actualizarJlist();
         }

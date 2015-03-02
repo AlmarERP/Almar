@@ -25,7 +25,7 @@
     <property name="pagado" type="boolean">
       <column name="pagado" not-null="true"/>
     </property>
-    <set fetch="select" inverse="true" lazy="true" name="lineasPedidos" table="lineas_pedido">
+    <set fetch="select" inverse="true" lazy="false" name="lineasPedidos" table="lineas_pedido" >
       <key>
         <column name="id_pedido" not-null="true"/>
       </key>

@@ -12,7 +12,6 @@ import almar.entidades.Proveedor;
 import hibernate.util.HibernateUtil;
 import java.util.Iterator;
 import java.util.List;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;

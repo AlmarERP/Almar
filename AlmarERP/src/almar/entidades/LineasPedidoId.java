@@ -12,6 +12,10 @@ public class LineasPedidoId implements java.io.Serializable {
     public LineasPedidoId() {
     }
 
+    public LineasPedidoId(int idPedido) {//Para probar la creación de una linea desde el form.
+        this.idPedido = idPedido;
+    }
+    
     public LineasPedidoId(int idLinea, int idPedido) {
         this.idLinea = idLinea;
         this.idPedido = idPedido;
@@ -59,7 +63,7 @@ public class LineasPedidoId implements java.io.Serializable {
 
     @Override
     public String toString() {
-        return "LineasPedidoId{" + "idLinea=" + idLinea + ", idPedido=" + idPedido + '}';
+        return ""+idLinea;
     }
 
 }
