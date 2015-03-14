@@ -1,7 +1,10 @@
 package almar.ventanas;
 
 import almar.entidades.Usuario;
+import java.awt.HeadlessException;
+import java.io.File;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,6 +20,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         initComponents();
         if (!usuario.isAdmin()) {//Si no es admin oculta usuarios.
             jMenuItemUsuarios.setVisible(false);
+            jMenuItemEmpleados.setVisible(false);
         }
     }
 
@@ -28,18 +32,21 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        jMenuArchivo = new javax.swing.JMenu();
         jMenuItemEmpleados = new javax.swing.JMenuItem();
         jMenuItemUsuarios = new javax.swing.JMenuItem();
-        jMenuItemProveedoresç = new javax.swing.JMenuItem();
-        jMenuItemCategorias = new javax.swing.JMenuItem();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItemCerrarSesion = new javax.swing.JMenuItem();
         jMenuItemSalir = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
+        jMenuEditar = new javax.swing.JMenu();
+        jMenuItemCategorias = new javax.swing.JMenuItem();
+        jMenuItemFormasDePago = new javax.swing.JMenuItem();
+        jMenuMantenimiento = new javax.swing.JMenu();
+        jMenuItemArticulos = new javax.swing.JMenuItem();
+        jMenuItemClientes = new javax.swing.JMenuItem();
+        jMenuItemProveedores = new javax.swing.JMenuItem();
+        jMenuProcesos = new javax.swing.JMenu();
+        jMenuItemPedidos = new javax.swing.JMenuItem();
+        jMenuAyuda = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Almar-ERP");
@@ -56,7 +63,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jPanel1.add(jLabel1);
         jLabel1.setBounds(10, 11, 1440, 743);
 
-        jMenu1.setText("Archivo");
+        jMenuArchivo.setText("Archivo");
 
         jMenuItemEmpleados.setText("Empleados");
         jMenuItemEmpleados.addActionListener(new java.awt.event.ActionListener() {
@@ -64,7 +71,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 jMenuItemEmpleadosActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItemEmpleados);
+        jMenuArchivo.add(jMenuItemEmpleados);
 
         jMenuItemUsuarios.setText("Usuarios");
         jMenuItemUsuarios.addActionListener(new java.awt.event.ActionListener() {
@@ -72,55 +79,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 jMenuItemUsuariosActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItemUsuarios);
+        jMenuArchivo.add(jMenuItemUsuarios);
 
-        jMenuItemProveedoresç.setText("Proveedores");
-        jMenuItemProveedoresç.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemCerrarSesion.setText("Cerrar Sesión");
+        jMenuItemCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemProveedoresçActionPerformed(evt);
+                jMenuItemCerrarSesionActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItemProveedoresç);
-
-        jMenuItemCategorias.setText("Categorias");
-        jMenuItemCategorias.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemCategoriasActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItemCategorias);
-
-        jMenuItem1.setText("Artículos");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem1);
-
-        jMenuItem2.setText("Clientes");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem2);
-
-        jMenuItem3.setText("Formas de pago");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem3);
-
-        jMenuItem4.setText("Pedidos");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem4);
+        jMenuArchivo.add(jMenuItemCerrarSesion);
 
         jMenuItemSalir.setText("Salir");
         jMenuItemSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -128,15 +95,77 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 jMenuItemSalirActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItemSalir);
+        jMenuArchivo.add(jMenuItemSalir);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(jMenuArchivo);
 
-        jMenu2.setText("Editar");
-        jMenuBar1.add(jMenu2);
+        jMenuEditar.setText("Editar");
 
-        jMenu3.setText("Ayuda");
-        jMenuBar1.add(jMenu3);
+        jMenuItemCategorias.setText("Categorias");
+        jMenuItemCategorias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCategoriasActionPerformed(evt);
+            }
+        });
+        jMenuEditar.add(jMenuItemCategorias);
+
+        jMenuItemFormasDePago.setText("Formas de pago");
+        jMenuItemFormasDePago.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemFormasDePagoActionPerformed(evt);
+            }
+        });
+        jMenuEditar.add(jMenuItemFormasDePago);
+
+        jMenuBar1.add(jMenuEditar);
+
+        jMenuMantenimiento.setText("Mantenimiento");
+
+        jMenuItemArticulos.setText("Artículos");
+        jMenuItemArticulos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemArticulosActionPerformed(evt);
+            }
+        });
+        jMenuMantenimiento.add(jMenuItemArticulos);
+
+        jMenuItemClientes.setText("Clientes");
+        jMenuItemClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemClientesActionPerformed(evt);
+            }
+        });
+        jMenuMantenimiento.add(jMenuItemClientes);
+
+        jMenuItemProveedores.setText("Proveedores");
+        jMenuItemProveedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemProveedoresActionPerformed(evt);
+            }
+        });
+        jMenuMantenimiento.add(jMenuItemProveedores);
+
+        jMenuBar1.add(jMenuMantenimiento);
+
+        jMenuProcesos.setText("Procesos");
+
+        jMenuItemPedidos.setText("Pedidos");
+        jMenuItemPedidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemPedidosActionPerformed(evt);
+            }
+        });
+        jMenuProcesos.add(jMenuItemPedidos);
+
+        jMenuBar1.add(jMenuProcesos);
+
+        jMenuAyuda.setText("Ayuda");
+        jMenuAyuda.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuAyudaMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenuAyuda);
 
         setJMenuBar(jMenuBar1);
 
@@ -162,7 +191,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItemSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSalirActionPerformed
-        System.exit(0);
+        int i = JOptionPane.showConfirmDialog(this, "Se cerrará el programa ¿Está seguro?", "Salir", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (i == 0) {
+            System.exit(0);
+        }
     }//GEN-LAST:event_jMenuItemSalirActionPerformed
 
     private void jMenuItemEmpleadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEmpleadosActionPerformed
@@ -175,52 +207,81 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         ventanaUsuarios.setVisible(true);
     }//GEN-LAST:event_jMenuItemUsuariosActionPerformed
 
-    private void jMenuItemProveedoresçActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemProveedoresçActionPerformed
+    private void jMenuItemProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemProveedoresActionPerformed
         VentanaProveedores ventanaProveedores = new VentanaProveedores(this, true);
         ventanaProveedores.setVisible(true);
-    }//GEN-LAST:event_jMenuItemProveedoresçActionPerformed
+    }//GEN-LAST:event_jMenuItemProveedoresActionPerformed
 
     private void jMenuItemCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCategoriasActionPerformed
         VentanaCategorias ventanaCategorias = new VentanaCategorias(this, true);
         ventanaCategorias.setVisible(true);
     }//GEN-LAST:event_jMenuItemCategoriasActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jMenuItemArticulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemArticulosActionPerformed
         VentanaArticulos ventanaArticulos = new VentanaArticulos(this, true);
         ventanaArticulos.setVisible(true);
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_jMenuItemArticulosActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void jMenuItemClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemClientesActionPerformed
         VentanaClientes ventanaClientes = new VentanaClientes(this, true);
         ventanaClientes.setVisible(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_jMenuItemClientesActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void jMenuItemFormasDePagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemFormasDePagoActionPerformed
         VentanaFormasDePago ventanaFormasDePago = new VentanaFormasDePago(this, true);
         ventanaFormasDePago.setVisible(true);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_jMenuItemFormasDePagoActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void jMenuItemPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPedidosActionPerformed
         VentanaPedidos ventanaPedidos = new VentanaPedidos(this, true);
         ventanaPedidos.setVisible(true);
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_jMenuItemPedidosActionPerformed
 
+    private void jMenuItemCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCerrarSesionActionPerformed
+
+        int i = JOptionPane.showConfirmDialog(this, "Se cerrará la sesión actual, ¿Está seguro?", "Cerrar Sesión", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (i == 0) {
+            new VentanaLogin().setVisible(true);
+            this.dispose();
+        }
+
+    }//GEN-LAST:event_jMenuItemCerrarSesionActionPerformed
+
+    private void jMenuAyudaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuAyudaMouseClicked
+        abrirDocumentacion();
+    }//GEN-LAST:event_jMenuAyudaMouseClicked
+
+    private void abrirDocumentacion() throws HeadlessException {
+        String ruta = System.getProperty("user.dir") + "\\doc\\ayuda.pdf";
+        File f = new File(ruta);
+        if (f.exists()) {
+            try {
+                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + ruta);
+            } catch (Exception e) {
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No existe\n" + ruta, "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenuArchivo;
+    private javax.swing.JMenu jMenuAyuda;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenu jMenuEditar;
+    private javax.swing.JMenuItem jMenuItemArticulos;
     private javax.swing.JMenuItem jMenuItemCategorias;
+    private javax.swing.JMenuItem jMenuItemCerrarSesion;
+    private javax.swing.JMenuItem jMenuItemClientes;
     private javax.swing.JMenuItem jMenuItemEmpleados;
-    private javax.swing.JMenuItem jMenuItemProveedoresç;
+    private javax.swing.JMenuItem jMenuItemFormasDePago;
+    private javax.swing.JMenuItem jMenuItemPedidos;
+    private javax.swing.JMenuItem jMenuItemProveedores;
     private javax.swing.JMenuItem jMenuItemSalir;
     private javax.swing.JMenuItem jMenuItemUsuarios;
+    private javax.swing.JMenu jMenuMantenimiento;
+    private javax.swing.JMenu jMenuProcesos;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 

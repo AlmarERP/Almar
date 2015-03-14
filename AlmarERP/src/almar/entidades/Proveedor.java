@@ -5,6 +5,7 @@ import almar.entidades.validaciones.Nif;
 import almar.excepciones.Caption;
 import java.util.HashSet;
 import java.util.Set;
+import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.*;
 
 /**
@@ -13,17 +14,22 @@ import org.hibernate.validator.constraints.*;
 public class Proveedor implements java.io.Serializable {
 
     private Integer idProveedor;
-    @NotBlank
     @Caption("Nif")
     @Nif
     private String cif;
+    @Size(min = 3, max = 10)
     private String nombre;
+    @Size(min = 3, max = 40)
     private String telefono;
     @Email
     private String email;
+    @Size(min = 3, max = 60)
     private String direccion;
+    @Size(min = 3, max = 20)
     private String ciudad;
+    @Size(min = 3, max = 20)
     private String provincia;
+    @Size(min = 5, max = 5)
     private String cp;
     private Set articulos = new HashSet(0);
 

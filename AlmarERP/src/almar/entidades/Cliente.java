@@ -5,6 +5,7 @@ import almar.entidades.validaciones.Nif;
 import almar.excepciones.Caption;
 import java.util.HashSet;
 import java.util.Set;
+import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.*;
 
 /**
@@ -17,15 +18,22 @@ public class Cliente implements java.io.Serializable {
     @Caption("Nif")
     @Nif
     private String nif;
+    @Size(min = 3, max = 10)
     private String nombre;
+    @Size(min = 3, max = 40)
     private String apellidos;
+    @Size(min = 9, max = 40)
     private String telefono;
+    @Size(min = 3, max = 60)
+    private String direccion;
+    @Size(min = 3, max = 20)
+    private String ciudad;
+    @Size(min = 3, max = 20)
+    private String provincia;
+    @Size(min = 5, max = 5)
+    private String cp;
     @Email
     private String email;
-    private String direccion;
-    private String ciudad;
-    private String provincia;
-    private String cp;
     private Set pedidos = new HashSet(0);
 
     public Cliente() {

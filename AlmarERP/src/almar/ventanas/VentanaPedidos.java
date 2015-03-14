@@ -127,10 +127,20 @@ public class VentanaPedidos extends javax.swing.JDialog implements patronObserve
         jLabel11.setText("Presupuesto:");
 
         jCheckBox_Presupuesto.setEnabled(false);
+        jCheckBox_Presupuesto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox_PresupuestoActionPerformed(evt);
+            }
+        });
 
         jLabel13.setText("Pagado:");
 
         jCheckBox_Pagado.setEnabled(false);
+        jCheckBox_Pagado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox_PagadoActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("Forma de pago:");
 
@@ -538,6 +548,24 @@ public class VentanaPedidos extends javax.swing.JDialog implements patronObserve
         jList1.setSelectedIndex(index);
     }//GEN-LAST:event_formWindowActivated
 
+    private void jCheckBox_PagadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_PagadoActionPerformed
+        if (jCheckBox_Pagado.isEnabled()) {
+            jCheckBox_Presupuesto.setEnabled(true);
+            if (jCheckBox_Pagado.isSelected()) {
+                jCheckBox_Presupuesto.setEnabled(false);
+            }
+        }
+    }//GEN-LAST:event_jCheckBox_PagadoActionPerformed
+
+    private void jCheckBox_PresupuestoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox_PresupuestoActionPerformed
+        if (jCheckBox_Presupuesto.isEnabled()) {
+            jCheckBox_Pagado.setEnabled(true);
+            if (jCheckBox_Presupuesto.isSelected()) {
+                jCheckBox_Pagado.setEnabled(false);
+            }
+        }
+    }//GEN-LAST:event_jCheckBox_PresupuestoActionPerformed
+
     private void actualizarJlist() {
         HibernateUtil.openSessionAndBindToThread();
         try {
@@ -622,6 +650,17 @@ public class VentanaPedidos extends javax.swing.JDialog implements patronObserve
 
     private void activarCampos(boolean estado) {
         jTable1.setEnabled(estado);
+        if (estado && jCheckBox_Pagado.isSelected()) {
+            System.out.println("pagado seleccionado");
+            jCheckBox_Pagado.setEnabled(true);
+            jCheckBox_Presupuesto.setEnabled(false);
+        } else if (estado && jCheckBox_Presupuesto.isSelected()) {
+            jCheckBox_Presupuesto.setEnabled(true);
+            jCheckBox_Pagado.setEnabled(false);
+        } else {
+            jCheckBox_Pagado.setEnabled(estado);
+            jCheckBox_Presupuesto.setEnabled(estado);
+        }
         for (Object obj : jPanel2.getComponents()) {
             if (obj instanceof JTextField) {
                 JTextField temp = (JTextField) obj;
@@ -633,10 +672,10 @@ public class VentanaPedidos extends javax.swing.JDialog implements patronObserve
                 JComboBox temp = (JComboBox) obj;
                 temp.setEnabled(estado);
             }
-            if (obj instanceof JCheckBox) {
-                JCheckBox temp = (JCheckBox) obj;
-                temp.setEnabled(estado);
-            }
+//            if (obj instanceof JCheckBox) {
+//                JCheckBox temp = (JCheckBox) obj;
+//                temp.setEnabled(estado);
+//            }
             if (obj instanceof JDateChooser) {
                 JDateChooser temp = (JDateChooser) obj;
                 temp.setEnabled(estado);
@@ -665,52 +704,6 @@ public class VentanaPedidos extends javax.swing.JDialog implements patronObserve
             }
         }
     }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Metal".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaPedidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaPedidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaPedidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaPedidos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                VentanaPedidos dialog = new VentanaPedidos(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtras;
     private javax.swing.JButton btnSiguiente;

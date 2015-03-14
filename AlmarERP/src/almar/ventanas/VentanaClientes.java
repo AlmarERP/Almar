@@ -7,7 +7,6 @@ import almar.excepciones.BussinessMessage;
 import almar.entidades.Cliente;
 import hibernate.util.HibernateUtil;
 import java.util.List;
-import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import patronObserver.Subject;
@@ -86,6 +85,11 @@ public class VentanaClientes extends javax.swing.JDialog implements patronObserv
         jLabel2.setText("Nif:");
 
         jTF_Nif.setEditable(false);
+        jTF_Nif.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTF_NifKeyReleased(evt);
+            }
+        });
 
         jLabel3.setText("Nombre:");
 
@@ -441,6 +445,10 @@ public class VentanaClientes extends javax.swing.JDialog implements patronObserv
         }
     }//GEN-LAST:event_jList1ValueChanged
 
+    private void jTF_NifKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTF_NifKeyReleased
+        jTF_Nif.setText(jTF_Nif.getText().toUpperCase());
+    }//GEN-LAST:event_jTF_NifKeyReleased
+
     private void actualizarJlist() {
         HibernateUtil.openSessionAndBindToThread();
         try {
@@ -483,50 +491,6 @@ public class VentanaClientes extends javax.swing.JDialog implements patronObserv
             }
         }
     }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Metal".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                VentanaClientes dialog = new VentanaClientes(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtras;
     private javax.swing.JButton btnSiguiente;

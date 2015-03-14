@@ -5,8 +5,8 @@ import almar.persistencia.dao.ArticuloDAO;
 import almar.persistencia.dao.ArticuloDAOImplHibernate;
 import almar.excepciones.BussinessException;
 import java.util.List;
+import java.util.ListIterator;
 import patronObserver.Subject;
-
 public class ArticuloController extends Subject {
 
     ArticuloDAO articuloDAO;
@@ -37,5 +37,19 @@ public class ArticuloController extends Subject {
     public List listaArticulos() throws BussinessException {
         return articuloDAO.findAll();
     }
-
+    //Buscar orquesta por nombre y pasarle el indice donde se encuentra:
+    public int buscarArticulo(List listaArticulos,String nomArticulo) throws BussinessException {
+        ListIterator<Articulo> it = listaArticulos.listIterator();
+        Articulo temp;
+        int indice;
+        while (it.hasNext()) {
+            indice = it.nextIndex();
+            temp = it.next();
+            
+            if (temp.getNombre().toLowerCase().contains(nomArticulo.toLowerCase())) {
+                return indice;
+            }
+        }
+        return -1;
+    }
 }

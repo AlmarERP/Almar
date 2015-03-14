@@ -15,8 +15,8 @@ import javax.validation.Payload;
 @Constraint(validatedBy = NifValidator.class)
 @Documented
 public @interface Nif {
-
-    String message() default "DNI Erroneo, faga o favor de comprobalo";
+    
+    String message() default "DNI Erroneo";
 
     Class<?>[] groups() default {};
 
