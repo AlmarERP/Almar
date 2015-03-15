@@ -451,7 +451,7 @@ public class VentanaArticulos extends javax.swing.JDialog implements patronObser
                 articulo = new Articulo(Integer.parseInt(jTF_idArticulo.getText()), (Categoria) listaCategorias.get(jComboBoxCategoria.getSelectedIndex()), (Proveedor) listaProveedores.get(jComboBoxProveedor.getSelectedIndex()), jTF_CodFab.getText(), Integer.parseInt(jTF_Stock.getText()), jTF_Nombre.getText(), Integer.parseInt(jTF_Precio.getText()), jTA_Descripcion.getText());
             }
             articuloController.guardar(articulo);
-            if (jLabelFoto.getIcon() != null) {
+            if (jLabelFoto.getIcon() != null && fc != null) {
                 copiarImagen(articulo.getIdArticulo());
             }
 

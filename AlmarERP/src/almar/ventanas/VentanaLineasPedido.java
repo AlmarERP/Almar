@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -28,6 +30,7 @@ public class VentanaLineasPedido extends javax.swing.JDialog implements patronOb
 
     private LineasPedidoController lineasPedidoController;
     private ArticuloController articuloController;
+    private Articulo articuloSeleccionado;
     private LineasPedidoListModel lineasPedidoListModel;
     private List listaLineasPedidos;
     private List listaArticulos;
@@ -291,24 +294,32 @@ public class VentanaLineasPedido extends javax.swing.JDialog implements patronOb
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         try {
-            LineasPedido lineasPedido;
-            Set lista = pedido.getLineasPedidos();
-            if (jTF_idLineasPedido.getText().isEmpty()) {//Si es nuevo no lleva id porque se crea autoincrement en la bd:
-                lineasPedido = new LineasPedido(new LineasPedidoId(pedido.getIdPedido()), (Articulo) listaArticulos.get(jComboBoxArticulo.getSelectedIndex()), pedido, Integer.parseInt(jTF_NumArticulos.getText()));
+            articuloSeleccionado = (Articulo) listaArticulos.get(jComboBoxArticulo.getSelectedIndex());
+            if (Integer.parseInt(jTF_NumArticulos.getText()) > articuloSeleccionado.getStock()) {
+                JOptionPane.showMessageDialog(null, "Del artículo seleccionado solo quedan " + articuloSeleccionado.getStock() + " uds");
+            } else {
+                LineasPedido lineasPedido;
+                Set lista = pedido.getLineasPedidos();
+                articuloSeleccionado.setStock(articuloSeleccionado.getStock() - Integer.parseInt(jTF_NumArticulos.getText()));
+                JOptionPane.showMessageDialog(null, "Del artículo añadido ahora quedan " + articuloSeleccionado.getStock() + " uds");
+                if (jTF_idLineasPedido.getText().isEmpty()) {//Si es nuevo no lleva id porque se crea autoincrement en la bd:
+                    lineasPedido = new LineasPedido(new LineasPedidoId(pedido.getIdPedido()), articuloSeleccionado, pedido, Integer.parseInt(jTF_NumArticulos.getText()));
 
-            } else {//Si es actualización lleva el id:
-                lineasPedido = new LineasPedido(new LineasPedidoId(Integer.parseInt(jTF_idLineasPedido.getText()), pedido.getIdPedido()), (Articulo) listaArticulos.get(jComboBoxArticulo.getSelectedIndex()), pedido, Integer.parseInt(jTF_NumArticulos.getText()));
-                lista.remove(listaLineasPedidos.get(jList1.getSelectedIndex()));
+                } else {//Si es actualización lleva el id:
+                    lineasPedido = new LineasPedido(new LineasPedidoId(Integer.parseInt(jTF_idLineasPedido.getText()), pedido.getIdPedido()), articuloSeleccionado, pedido, Integer.parseInt(jTF_NumArticulos.getText()));
+                    lista.remove(listaLineasPedidos.get(jList1.getSelectedIndex()));
+                }
+                articuloController.guardar(articuloSeleccionado);
+                lista.add(lineasPedido);
+                pedido.setLineasPedidos(lista);
+                lineasPedidoController.guardar(lineasPedido);
+
+                jList1.clearSelection();
+                actualizarJlist();
+                jList1ValueChanged(null);//Vuelve a poner en los campos el valor selecionado del jList.
+                botonesVisibles(true, true, true, false, false);
+                activarCampos(false);
             }
-            lista.add(lineasPedido);
-            pedido.setLineasPedidos(lista);
-            lineasPedidoController.guardar(lineasPedido);
-
-            jList1.clearSelection();
-            actualizarJlist();
-            jList1ValueChanged(null);//Vuelve a poner en los campos el valor selecionado del jList.
-            botonesVisibles(true, true, true, false, false);
-            activarCampos(false);
         } catch (BussinessException be) {
             for (BussinessMessage bussinessMessage : be.getBussinessMessages()) {
                 JOptionPane.showMessageDialog(null, bussinessMessage.toString());
@@ -322,8 +333,17 @@ public class VentanaLineasPedido extends javax.swing.JDialog implements patronOb
         if (jTF_idLineasPedido.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna lineaPedido de la lista");
         } else {
-            activarCampos(true);
-            botonesVisibles(false, false, false, true, true);
+            try {
+                activarCampos(true);
+                botonesVisibles(false, false, false, true, true);
+                articuloSeleccionado = (Articulo) listaArticulos.get(jComboBoxArticulo.getSelectedIndex());
+                articuloSeleccionado.setStock(articuloSeleccionado.getStock() + Integer.parseInt(jTF_NumArticulos.getText()));
+                articuloController.guardar(articuloSeleccionado);
+            } catch (BussinessException be) {
+                for (BussinessMessage bussinessMessage : be.getBussinessMessages()) {
+                    JOptionPane.showMessageDialog(null, bussinessMessage.toString());
+                }
+            }
         }
     }//GEN-LAST:event_jButtonModificarActionPerformed
 
