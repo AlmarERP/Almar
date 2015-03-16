@@ -34,6 +34,7 @@ public class VentanaLogin extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanelPrincipal = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -58,6 +59,10 @@ public class VentanaLogin extends javax.swing.JFrame {
         jPanelPrincipal.setOpaque(false);
         jPanelPrincipal.setPreferredSize(new java.awt.Dimension(800, 533));
         jPanelPrincipal.setLayout(null);
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/qrcode .png"))); // NOI18N
+        jPanelPrincipal.add(jLabel5);
+        jLabel5.setBounds(40, 350, 100, 100);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Iniciar Sesión", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(255, 255, 255))); // NOI18N
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -246,6 +251,7 @@ public class VentanaLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabelWeb;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -312,7 +318,7 @@ public class VentanaLogin extends javax.swing.JFrame {
             if (Desktop.isDesktopSupported()) {
                 Desktop desktop = Desktop.getDesktop();
                 if (desktop.isSupported(Desktop.Action.BROWSE)) {
-                    desktop.browse(new URI("http://www.almar-erp.es"));
+                    desktop.browse(new URI("http://localhost:8000/login/?next=/"));
                 }
             }
         } catch (URISyntaxException | IOException e) {

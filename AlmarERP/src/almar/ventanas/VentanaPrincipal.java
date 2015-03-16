@@ -252,7 +252,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuAyudaMouseClicked
 
     private void abrirDocumentacion() throws HeadlessException {
-        String ruta = System.getProperty("user.dir") + "\\doc\\ayuda.pdf";
+        String ruta = System.getProperty("user.dir") + "\\doc\\ayudaDOC.docx";
         File f = new File(ruta);
         if (f.exists()) {
             try {
